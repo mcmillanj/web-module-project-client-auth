@@ -1,18 +1,42 @@
-import React from 'react';
+import React,{Route} from 'react';
 import './App.css';
-import { BrowserRouter as Router, Route} from 'react-router-dom';
+import { BrowserRouter as Router, Switch,Link} from 'react-router-dom';
+import Login from './components/Login';
+import Logout from './components/Logout';
+import FriendsList from './components/Friend';
+ import PrivateRoute from './components/PrivateRoute';
 
 
-const Login = ()=> {
-  return (<h2>Login</h2>)
-}
 
 function App() {
+
+  const isLoggedin = localStorage.getItem('token');
+  
+
   return (
-    <div className="App">
-      <h2>Client Auth Project</h2>
-    </div>
+    <Router>
+      <div className="App">
+          <ul>
+          <li>
+            <Link to='/login'>Login</Link>
+          </li>
+          <li>
+            {isLoggedin && <Link to='/logout'>Logout</Link>}
+          </li>
+           <li>
+            {isLoggedin && <Link to='/protected'>Friends List</Link>}
+          </li>
+        </ul>
+        <Switch>
+          <PrivateRoute path ='/protected' component = {FriendsList} />
+          <Route path ='/login' component = {Login} />
+          <PrivateRoute path ='/logout' component = {Logout} />
+          <Route path ='/' component = {Login} />
+        </Switch>
+      </div>
+    </Router>
   );
 }
+
 
 export default App;
