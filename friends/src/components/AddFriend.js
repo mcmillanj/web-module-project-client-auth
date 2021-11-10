@@ -3,16 +3,17 @@ import axiosWithAuth from '../utils/axiosWithAuth';
 
 
 
-
-
-
+const  initialaddFriend = {
+id: 0,
+name: '',
+age: '',
+email: ''
+}
 
 const AddFriend  = (props) => {
 
-    const [addFriend, setaddFriend] = useState({
-        name: '',
-        age: '',
-        email: ''
+    const [addFriend, setaddFriend] = useState({initialaddFriend
+       
     });
     const handleChange = e => {
         setaddFriend({
@@ -23,12 +24,13 @@ const AddFriend  = (props) => {
 
     const handleSubmit = e => {
         e.preventDefault();
-
-        axiosWithAuth().post('http://localhost:5000/api/friends', addFriend)
+        const token = localStorage.getItem('token');
+        axiosWithAuth().post('http://localhost:5000/api/friends', addFriend,{headers:{authorization:token}})
         .then(response => {
             console.log(response)
-            props.setaddFriends((friend) => [...friend, addFriend]);
-            props.history.push('/protected')
+            setaddFriend(response.data);
+            // props.setaddFriends((friend) => [...friend, addFriend]);
+            // props.history.push('/protected')
         })
         .catch(error => {
             console.log(error)

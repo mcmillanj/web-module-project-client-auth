@@ -10,7 +10,7 @@ import FriendsList from './components/Friend';
 
 function App() {
 
-  const isLoggedin = localStorage.getItem('token');
+  const isLoggedIn = localStorage.getItem('token');
   
 
   return (
@@ -21,10 +21,10 @@ function App() {
             <Link to='/login'>Login</Link>
           </li>
           <li>
-            {isLoggedin && <Link to='/logout'>Logout</Link>}
+            {isLoggedIn && <Link to='/logout'>Logout</Link>}
           </li>
            <li>
-            {isLoggedin && <Link to='/protected'>Friends List</Link>}
+            {isLoggedIn && <Link to='/protected'>Friends List</Link>}
           </li>
         </ul>
         <Switch>
